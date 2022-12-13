@@ -1,0 +1,88 @@
+{
+    "name": "project-dev",
+    "dockerComposeFile": [
+        "docker-compose.yml"
+    ],
+    "service": "vscode",
+    "runServices": [
+        "vscode"
+    ],
+    "shutdownAction": "stopCompose",
+    "postCreateCommand": "go mod download && go mod tidy",
+    "workspaceFolder": "/workspace",
+    // "overrideCommand": "",
+    "extensions": [
+        "golang.go",
+        "eamodio.gitlens", // IDE Git information
+        "davidanson.vscode-markdownlint"
+    ],
+    "settings": {
+        "files.eol": "\n",
+        "remote.extensionKind": {
+            "ms-azuretools.vscode-docker": "workspace"
+        },
+
+        "go.buildOnSave": "package",
+        "go.testEnvFile": "${workspaceFolder}/.env",
+        "go.formatTool": "goimports",
+        "go.lintFlags": ["--fast"],
+
+        "go.useLanguageServer": true,
+        "[go]": {
+            "editor.formatOnSave": true,
+            "editor.codeActionsOnSave": {
+                "source.organizeImports": true
+            },
+            "files.eol": "\n", // formatting only supports LF line endings
+            "editor.snippetSuggestions": "none"
+        },
+        "[go.mod]": {
+            "editor.codeActionsOnSave": {
+                "source.organizeImports": true
+            }
+        },
+        "gopls.env": {
+            "GOFLAGS": "-tags=integration"
+        },
+        "gopls": {
+            "build.buildFlags": [
+                "-tags",
+                ""
+            ],
+            "analyses": {
+                "fillstruct": false
+            },
+            "usePlaceholders": true, // add parameter placeholders when completing a function
+            // Experimental settings
+            "completeUnimported": true, // autocomplete unimported packages
+            // "watchFileChanges": true,  // watch file changes outside of the editor
+            "deepCompletion": true, // enable deep completion
+            "completionDocumentation": true,
+            "hoverKind": "SynopsisDocumentation"
+        },
+        "go.lintTool": "golangci-lint",
+        "go.lintOnSave": "package",
+        "editor.formatOnSave": true,
+        "go.toolsEnvVars": {
+            "GOFLAGS": "-tags=integration",
+            "CGO_ENABLED": "0"
+        },
+        "go.testEnvVars": {
+            "": ""
+        },
+        "go.testFlags": [
+            "-v",
+            "-race",
+            "-test.v",
+            "-count=1"
+        ],
+        "go.testTimeout": "10s",
+        "go.coverOnSingleTest": true,
+        "go.coverOnSingleTestFile": true,
+        "go.coverOnTestPackage": true,
+        "go.delveConfig": {
+            "apiVersion": 2
+        }
+    }
+}
+
